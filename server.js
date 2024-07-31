@@ -91,30 +91,27 @@ app.post('/generate-greeting', async (req, res) => {
 
   try {
     // const prompt = `Write a greeting for ${eventType} with a ${tone} tone and ${length} length in ${language}`;
-    const prompt = `
-    Generate a greeting option for ${eventType} in ${language}. The greeting should have a ${tone} tone and be ${length} in length. Format the greeting as follows:
-    
-    1.
-    [Personal opening on a separate line]
-    
-    [Event-specific content, well-wishes for the future, and closing statement, each in separate, logically divided paragraphs]
-    
-    Guidelines:
-    - Use rich and expressive language appropriate for the ${tone} tone
-    - Include relevant imagery or metaphors suitable for the ${eventType}
-    - Ensure the greeting is original, heartfelt, and memorable
-    - Adapt the content to be culturally appropriate for ${language}
-    - Do not use colons after the personal opening
-    - Use line breaks to separate different sections of the greeting
-    - Number the greeting clearly (1.)
-    - Present the greeting in clean, readable ${language} text with the specified formatting and without any additional markers or instructions.
-    `;    
+  const prompt = `
+  Generate a greeting option for ${eventType} in ${language}. The greeting should have a ${tone} tone and be ${length} in length. Format the greeting as follows:
+  
+  [Personal opening on a separate line]
+  
+  [Event-specific content, well-wishes for the future, and closing statement, each in separate, logically divided paragraphs]
+  
+  Guidelines:
+  - Use rich and expressive language appropriate for the ${tone} tone
+  - Include relevant imagery or metaphors suitable for the ${eventType}
+  - Ensure the greeting is original, heartfelt, and memorable
+  - Adapt the content to be culturally appropriate for ${language}
+  - Do not use colons after the personal opening
+  - Use line breaks to separate different sections of the greeting
+  `;    
 
 const response = await openai.chat.completions.create({
       model: 'gpt-4o',
       // model: 'gpt-3.5-turbo',
       messages: [{ role: 'user', content: prompt }],
-      max_tokens: 500,
+      max_tokens: 250,
     });
 
     console.log('Response from OpenAI:', response);
