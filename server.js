@@ -83,6 +83,7 @@ app.get('/', (req, res) => {
 
 app.post('/generate-greeting', async (req, res) => {
   const { eventType, tone, length, language } = req.body;
+  console.log('Request received:', req.body);  // הוספת לוגים
 
   if (!eventType || !tone || !length) {
     return res.status(400).json({ error: 'Missing required fields' });
@@ -97,7 +98,7 @@ app.post('/generate-greeting', async (req, res) => {
       max_tokens: 250,
     });
 
-    console.log(response);
+    console.log('Response from OpenAI:', response);
 
     res.json({ greeting: response.choices[0].message.content });
   } catch (error) {
