@@ -92,25 +92,27 @@ app.post('/generate-greeting', async (req, res) => {
   try {
     // const prompt = `Write a greeting for ${eventType} with a ${tone} tone and ${length} length in ${language}`;
     const prompt = `
-    Generate 3 distinct greeting options for ${eventType} in ${language}. Each greeting should have a ${tone} tone and be ${length} in length. Ensure each option is unique in style and content while adhering to the following structure:
+    Generate 3 distinct greeting options for ${eventType} in ${language}. Each greeting should have a ${tone} tone and be ${length} in length. Format each greeting as follows:
 
-For each greeting:
-1. A personalized opening
-2. Specific reference to the ${eventType}
-3. Well-wishes for the future
-4. A warm closing statement
+[Greeting Number].
+[Personal opening on a separate line]
+
+[Event-specific content, well-wishes for the future, and closing statement, each in separate, logically divided paragraphs]
 
 Guidelines:
 - Use rich and expressive language appropriate for the ${tone} tone
 - Include relevant imagery or metaphors suitable for the ${eventType}
 - Ensure each greeting is original, heartfelt, and memorable
 - Adapt the content to be culturally appropriate for ${language}
-- Do not include any labels, asterisks, or instructions in the final text
-- Separate each greeting clearly
+- Do not use colons after the personal opening
+- Use line breaks to separate different sections of the greeting
+- Number each greeting clearly (1., 2., 3.)
+- Leave a blank line between greetings for clear separation
 
-Present the greetings in clean, readable ${language} text without any additional formatting or markers.`;
-
-    const response = await openai.chat.completions.create({
+Present the greetings in clean, readable ${language} text with the specified formatting and without any additional markers or instructions.
+`;
+    
+const response = await openai.chat.completions.create({
       model: 'gpt-4o',
       // model: 'gpt-3.5-turbo',
       messages: [{ role: 'user', content: prompt }],
