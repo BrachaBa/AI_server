@@ -38,7 +38,7 @@
 //     //     prompt += ` for someone turning ${age}`;
 //     //   }
 //     //   prompt += '.';
-  
+
 
 //     // Calling OpenAI API to generate the greeting
 //     const response = await openai.chat.completions.create({
@@ -92,30 +92,29 @@ app.post('/generate-greeting', async (req, res) => {
   try {
     // const prompt = `Write a greeting for ${eventType} with a ${tone} tone and ${length} length in ${language}`;
     const prompt = `
-    Generate 3 distinct greeting options for ${eventType} in ${language}. Each greeting should have a ${tone} tone and be ${length} in length.
-    Ensure each option is unique in style and content while adhering to the following structure:
+    Generate 3 distinct greeting options for ${eventType} in ${language}. Each greeting should have a ${tone} tone and be ${length} in length. Ensure each option is unique in style and content while adhering to the following structure:
 
-    For each greeting option:
-    1. A personalized opening
-    2. Specific reference to the event
-    3. Well-wishes for the future
-    4. A warm closing statement
-    
-    Guidelines for all options:
-    - Use rich and expressive language appropriate for the specified tone
-    - Include relevant imagery or metaphors if suitable
-    - If appropriate for the tone, incorporate light humor
-    - Ensure each greeting is original, heartfelt, and memorable
-    - Adapt the content to be culturally appropriate for the specified language
-    
-    Label each option clearly (e.g., "Option 1:", "Option 2:", "Option 3:") and separate them visually for easy distinction.
-    `;
+For each greeting:
+1. A personalized opening
+2. Specific reference to the ${eventType}
+3. Well-wishes for the future
+4. A warm closing statement
+
+Guidelines:
+- Use rich and expressive language appropriate for the ${tone} tone
+- Include relevant imagery or metaphors suitable for the ${eventType}
+- Ensure each greeting is original, heartfelt, and memorable
+- Adapt the content to be culturally appropriate for ${language}
+- Do not include any labels, asterisks, or instructions in the final text
+- Separate each greeting clearly
+
+Present the greetings in clean, readable ${language} text without any additional formatting or markers.`;
 
     const response = await openai.chat.completions.create({
       model: 'gpt-4o',
       // model: 'gpt-3.5-turbo',
       messages: [{ role: 'user', content: prompt }],
-      max_tokens: 250,
+      max_tokens: 500,
     });
 
     console.log('Response from OpenAI:', response);
