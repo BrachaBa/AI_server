@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/generate-greeting', async (req, res) => {
-  const { eventType, tone, length, language } = req.body;
+  const { eventType, tone, length, language, age, customEvent } = req.body;
   console.log('Request received:', req.body);  // הוספת לוגים
 
   if (!eventType || !tone || !length || !language) {
