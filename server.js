@@ -91,24 +91,46 @@ app.post('/generate-greeting', async (req, res) => {
 
   try {
     // const prompt = `Write a greeting for ${eventType} with a ${tone} tone and ${length} length in ${language}`;
+  // const prompt = `
+  // Generate a greeting option for ${eventType} in ${language}. The greeting should have a ${tone} tone and be ${length} in length. Format the greeting as follows:
+  
+  // [Personal opening on a separate line]
+  
+  // [Event-specific content, well-wishes for the future, and closing statement, each in separate, logically divided paragraphs]
+  
+  // Guidelines:
+  // - Use rich and expressive language appropriate for the ${tone} tone
+  // - Include relevant imagery or metaphors suitable for the ${eventType}
+  // - Ensure the greeting is original, heartfelt, and memorable
+  // - Adapt the content to be culturally appropriate for ${language}
+  // - Do not use colons after the personal opening
+  // - Use line breaks to separate different sections of the greeting
+  // `;    
+
   const prompt = `
-  Generate a greeting option for ${eventType} in ${language}. The greeting should have a ${tone} tone and be ${length} in length. Format the greeting as follows:
-  
-  [Personal opening on a separate line]
-  
-  [Event-specific content, well-wishes for the future, and closing statement, each in separate, logically divided paragraphs]
+  Generate a greeting for a ${eventType} event in ${language}. The greeting should have a ${tone} tone and be ${length} in length.
   
   Guidelines:
-  - Use rich and expressive language appropriate for the ${tone} tone
-  - Include relevant imagery or metaphors suitable for the ${eventType}
-  - Ensure the greeting is original, heartfelt, and memorable
+  - Tailor the greeting specifically to the ${eventType} event
+  - Maintain a ${tone} tone throughout the message
+  - Ensure the greeting is ${length} as requested
+  - Include relevant congratulations or well-wishes appropriate for ${eventType}
   - Adapt the content to be culturally appropriate for ${language}
-  - Do not use colons after the personal opening
-  - Use line breaks to separate different sections of the greeting
-  `;    
+  - Structure the greeting with a brief opening, main content, and a closing
+  - Focus on sincere and heartfelt expressions rather than elaborate imagery
+  - Keep the language clear, appropriate, and event-specific
+  
+  Format:
+  [Brief opening]
+  [Main content with event-specific wishes or congratulations]
+  [Positive thoughts for the future related to the event]
+  [Brief closing]
+  `;
+  
 
 const response = await openai.chat.completions.create({
-      model: 'gpt-4o',
+      // model: 'gpt-4o',
+      model: 'gpt-4o-2024-08-06',
       // model: 'gpt-3.5-turbo',
       messages: [{ role: 'user', content: prompt }],
       max_tokens: 250,
