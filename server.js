@@ -85,29 +85,29 @@ app.post('/generate-greeting', async (req, res) => {
   const { eventType, tone, length, language } = req.body;
   console.log('Request received:', req.body);  // הוספת לוגים
 
-  if (!eventType || !tone || !length) {
+  if (!eventType || !tone || !length || !language) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
   try {
     // const prompt = `Write a greeting for ${eventType} with a ${tone} tone and ${length} length in ${language}`;
-  // const prompt = `
-  // Generate a greeting option for ${eventType} in ${language}. The greeting should have a ${tone} tone and be ${length} in length. Format the greeting as follows:
-  
-  // [Personal opening on a separate line]
-  
-  // [Event-specific content, well-wishes for the future, and closing statement, each in separate, logically divided paragraphs]
-  
-  // Guidelines:
-  // - Use rich and expressive language appropriate for the ${tone} tone
-  // - Include relevant imagery or metaphors suitable for the ${eventType}
-  // - Ensure the greeting is original, heartfelt, and memorable
-  // - Adapt the content to be culturally appropriate for ${language}
-  // - Do not use colons after the personal opening
-  // - Use line breaks to separate different sections of the greeting
-  // `;    
+    // const prompt = `
+    // Generate a greeting option for ${eventType} in ${language}. The greeting should have a ${tone} tone and be ${length} in length. Format the greeting as follows:
 
-  const prompt = `
+    // [Personal opening on a separate line]
+
+    // [Event-specific content, well-wishes for the future, and closing statement, each in separate, logically divided paragraphs]
+
+    // Guidelines:
+    // - Use rich and expressive language appropriate for the ${tone} tone
+    // - Include relevant imagery or metaphors suitable for the ${eventType}
+    // - Ensure the greeting is original, heartfelt, and memorable
+    // - Adapt the content to be culturally appropriate for ${language}
+    // - Do not use colons after the personal opening
+    // - Use line breaks to separate different sections of the greeting
+    // `;    
+
+    const prompt = `
   Generate a personalized greeting for a ${eventType} event in ${language}. The greeting should have a ${tone} tone and be ${length} in length.
   ${eventType === 'birthday' ? `This is for someone turning ${age} years old.` : ''}
   ${eventType === 'other' ? `This is for a custom event: "${customEvent}". Be very specific to this unique event.` : ''}
@@ -124,7 +124,7 @@ app.post('/generate-greeting', async (req, res) => {
   Create a cohesive, flowing greeting that feels personal and tailored to the specific event or age.
   `;
 
-const response = await openai.chat.completions.create({
+    const response = await openai.chat.completions.create({
       // model: 'gpt-4o',
       model: 'gpt-4o-2024-08-06',
       // model: 'gpt-3.5-turbo',
@@ -137,7 +137,7 @@ const response = await openai.chat.completions.create({
     res.json({ greeting: response.choices[0].message.content });
   } catch (error) {
     console.error('Error occurred:', error);
-    res.status(500).json({ error: 'Something went wrong' });
+    res.status(500).json({ error: 'Something went wrong', details: error.message });
   }
 });
 
