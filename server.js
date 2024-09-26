@@ -121,10 +121,9 @@ app.post('/generate-greeting', async (req, res) => {
   - Keep the language clear, appropriate, and event-specific
   
   Format:
-  [Brief opening]
-  [Main content with event-specific wishes or congratulations]
-  [Positive thoughts for the future related to the event]
-  [Brief closing]
+  Create a cohesive greeting without using any labels or brackets.
+  The greeting should flow naturally from the opening to the closing,
+  incorporating all the elements mentioned above in a seamless manner.
   `;
   
 
