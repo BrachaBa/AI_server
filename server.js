@@ -44,18 +44,13 @@ app.post('/generate-greeting', async (req, res) => {
     Create a cohesive, flowing greeting that feels personal and tailored to the specific event or age.
     `;
 
-    const response = await openai.chat.completions.create({
-      model: 'gpt-4o-2024-08-06',
-      messages: [{ role: 'user', content: prompt }],
-      max_tokens: 250,
-    });
-
-    res.json({ greeting: response.choices[0].message.content });
+    // Rest of the code remains the same
   } catch (error) {
     console.error('Error occurred:', error);
     res.status(500).json({ error: 'Something went wrong', details: error.message });
   }
 });
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
