@@ -108,24 +108,21 @@ app.post('/generate-greeting', async (req, res) => {
   // `;    
 
   const prompt = `
-  Generate a greeting for a ${eventType} event in ${language}. The greeting should have a ${tone} tone and be ${length} in length.
+  Generate a personalized greeting for a ${eventType} event in ${language}. The greeting should have a ${tone} tone and be ${length} in length.
+  ${eventType === 'birthday' ? `This is for someone turning ${age} years old.` : ''}
+  ${eventType === 'other' ? `This is for a custom event: "${customEvent}". Be very specific to this unique event.` : ''}
   
   Guidelines:
-  - Tailor the greeting specifically to the ${eventType} event
+  - Tailor the greeting very specifically to the exact event type or custom event
+  - If it's a birthday, make sure to reference the age and tailor the message accordingly
   - Maintain a ${tone} tone throughout the message
   - Ensure the greeting is ${length} as requested
-  - Include relevant congratulations or well-wishes appropriate for ${eventType}
-  - Adapt the content to be culturally appropriate for ${language}
-  - Structure the greeting with a brief opening, main content, and a closing
-  - Focus on sincere and heartfelt expressions rather than elaborate imagery
-  - Keep the language clear, appropriate, and event-specific
+  - Include highly relevant and specific congratulations or well-wishes
+  - Avoid generic phrases; make each part of the greeting unique to the event
+  - Focus on sincere, heartfelt, and personalized expressions
   
-  Format:
-  Create a cohesive greeting without using any labels or brackets.
-  The greeting should flow naturally from the opening to the closing,
-  incorporating all the elements mentioned above in a seamless manner.
+  Create a cohesive, flowing greeting that feels personal and tailored to the specific event or age.
   `;
-  
 
 const response = await openai.chat.completions.create({
       // model: 'gpt-4o',
