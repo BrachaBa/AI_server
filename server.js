@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/generate-greeting', async (req, res) => {
-  const { eventType, tone, length, language, age } = req.body;
+  const { eventType, tone, length, language, age, recipient, sender } = req.body;
   console.log('Request received:', req.body);
 
   if (!eventType || !tone || !length || !language) {
@@ -31,6 +31,8 @@ app.post('/generate-greeting', async (req, res) => {
     const prompt = `
     Generate a personalized greeting for a ${eventType} event in ${language}. The greeting should have a ${tone} tone and be ${length} in length.
     ${age ? `This is for someone turning ${age} years old.` : ''}
+        ${recipient ? `The greeting is intended for ${recipient}.` : ''}
+
 
     Guidelines:
     - Tailor the greeting very specifically to the exact event type
@@ -40,12 +42,14 @@ app.post('/generate-greeting', async (req, res) => {
     - Include highly relevant and specific congratulations or well-wishes
     - Avoid generic phrases; make each part of the greeting unique to the event
     - Focus on sincere, heartfelt, and personalized expressions
+    - Address the recipient by name if provided
+    - End the greeting with a suitable closing and include the sender's name: "${sender}"
 
     Create a cohesive, flowing greeting that feels personal and tailored to the specific event or age.
     `;
 
     const response = await openai.chat.completions.create({
-      model: 'gpt-4o-2024-08-06',
+      model: 'gpt-4o',
       messages: [{ role: 'user', content: prompt }],
       max_tokens: 250,
     });
